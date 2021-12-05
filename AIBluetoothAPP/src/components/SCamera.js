@@ -32,11 +32,11 @@ export default function SCamera(props) {
             canvasRef.current.width = width;
             canvasRef.current.height = height;
             const ctx = canvasRef.current.getContext("2d");
-            //const objects = await net.detect(nextImageTensor);
-            nextImageTensor.shape.unshift(1);
+            const objects = await net.detect(nextImageTensor);
+            //nextImageTensor.shape.unshift(1);
             console.log(nextImageTensor.shape);
-            const objects = await net.predict(nextImageTensor).data()
-            //drawRect(objects, ctx,canvasRef)
+            //const objects = await net.predict(nextImageTensor).data()
+            drawRect(objects, ctx,canvasRef)
             console.log(objects);        
             console.log(canvasRef.current.width)
             console.log(canvasRef.current.height)
@@ -61,10 +61,10 @@ export default function SCamera(props) {
       // initialise Tensorflow
       await initialiseTensorflow();
       // load the model
-      //setNet(await mobilenet.load());
+      setNet(await mobilenet.load());
       const modelJson = await require('../../assets/model.json');
       const modelWeight = await require('../../assets/weights.bin');
-      setNet(await tf.loadLayersModel(bundleResourceIO(modelJson, modelWeight)));
+     // setNet(await tf.loadLayersModel(bundleResourceIO(modelJson, modelWeight)));
     })();
   }, []);
 
@@ -102,8 +102,8 @@ export default function SCamera(props) {
         type={props.type}
         cameraTextureHeight={textureDims.height}
         cameraTextureWidth={textureDims.width}
-        resizeHeight= {height-70}
-        resizeWidth=  {width+50}
+        resizeHeight= {826}
+        resizeWidth=  {464}
         resizeDepth={3}
         onReady={this.handleCameraStream}
         autorender={true}>
