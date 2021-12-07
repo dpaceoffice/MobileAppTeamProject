@@ -1,11 +1,15 @@
-import React from "react";
-import { Text, View, StyleSheet, Button, FlatList, TouchableOpacity, ScrollView} from "react-native";
+import React, {useState} from "react";
+import { Text, View, StyleSheet, FlatList, } from "react-native";
 import SearchBar from "../components/SearchBar";
 
 const SearchScreen = (props) => {
+    const [searchTerm,setSearchTerm] = useState("");
 
     return <View style = {styles.container}>
-        <SearchBar />
+        <SearchBar 
+            searchTerm = {searchTerm} 
+            onTermChange = {(newTerm) => setSearchTerm(newTerm)}
+        />
     </View>
 }
 

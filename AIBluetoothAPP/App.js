@@ -40,7 +40,7 @@ const navigator = createBottomTabNavigator ({
 				)
 			}
 		},
-		Camera: {screen: CameraStack,
+		Camera: {screen: CameraScreen,
 			navigationOptions: {
 				tabBarLabel: "Camera",
 				tabBarIcon: ({tintColor}) => (
