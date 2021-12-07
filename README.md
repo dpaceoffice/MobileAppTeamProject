@@ -8,6 +8,7 @@ Load custom models for AI
 Search on results found and view a description
 
 How to use:
-Before launching you can install the project dependencies using the i_depys.py python script
-Launch expo - 'expo start'
-Navigate to the expo app on a device in your local network and launch the app
+
+	1.)Install project dependencies 'python i_deps.py'
+	1.)Launch expo - 'expo start'
+	2.)Navigate to the expo app on a device in your local network and launch the app
