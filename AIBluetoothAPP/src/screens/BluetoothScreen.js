@@ -1,10 +1,13 @@
-import React from "react";
+import React, {Component} from "react";
 import { Text, View, StyleSheet, Button, FlatList, TouchableOpacity, ScrollView} from "react-native";
+import BlueToothButton from "../components/BlueToothButton";
 
 const BluetoothScreen = (props) => {
-
+    
     return <View style = {styles.container}>
-        <Text>Bluetooth Screen</Text>
+        <Text>Robot </Text>
+        <BlueToothButton />
+
     </View>
 }
 
@@ -12,9 +15,13 @@ const BluetoothScreen = (props) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: "center",
-        justifyContent: "center"
-    }
+        alignItems: "flex-start",
+        justifyContent: "space-evenly",
+        backgroundColor: "whitesmoke",
+        flexDirection: "row",
+
+    },
+   
 });
 
 export default BluetoothScreen;

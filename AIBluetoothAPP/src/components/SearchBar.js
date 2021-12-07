@@ -10,6 +10,8 @@ const SearchBar = (props) => {
 		<TextInput 
 			style = {styles.text} 
 			placeholder = "Search"
+			value = {props.searchTerm}
+			onChangeText = {(newTerm) => props.onTermChange(newTerm)}
 		/>
 
 	</View>
@@ -22,7 +24,7 @@ const styles = StyleSheet.create({
 		borderRadius:5,
 		borderWidth:3,
 		width:275,
-		//marginHorizontal:1,
+		marginHorizontal:1,
 		flexDirection:"row"
 	},
 	text:{
