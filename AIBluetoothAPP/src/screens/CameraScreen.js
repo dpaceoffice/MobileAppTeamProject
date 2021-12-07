@@ -19,7 +19,7 @@ const CameraScreen = () => {
                         : Camera.Constants.Type.back
                 );
             }}>
-            <Text style={{ alignSelf: 'center', marginBottom: 20 }}> Flip </Text>
+            <Text style={{ alignSelf: 'center', marginBottom: 40 }}> Flip </Text>
         </TouchableOpacity>
     </View>
 
