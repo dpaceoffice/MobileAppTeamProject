@@ -45,7 +45,6 @@ export default function SCamera(props) {
              // pred.print();
              // console.log('--------------------------------------------------------------------------------')
            // })
-            //console.log(preds);
             drawRect(prediction, ctx,canvasRef)
             //console.log(prediction);        
             //console.log(canvasRef.current.width)
@@ -106,14 +105,14 @@ export default function SCamera(props) {
         marginLeft: "auto",
         marginRight: "auto",
         zindex: 0,
-        height: '100%',
-        width: '100%',
+        height: height,
+        width: width,
       }}
         type={props.type}
         cameraTextureHeight={textureDims.height}
         cameraTextureWidth={textureDims.width}
         resizeDepth={3}
-        resizeHeight= {height}
+        resizeHeight= {height-150}
         resizeWidth=  {width}
         onReady={this.handleCameraStream}
         autorender={true}>
@@ -122,8 +121,8 @@ export default function SCamera(props) {
         <Canvas
         ref={canvasRef}
         style={{
-          width:'100%',
-          height:'100%',
+          height:height,
+          width:width,
           zindex: 1,
         }}
       />
