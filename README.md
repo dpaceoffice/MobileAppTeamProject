@@ -3,9 +3,10 @@ This mobile app currently implements the coco-ssd object detection model using t
 It processes live camera data from the device and draws predictions onto the screen via an overlaying canvas.
 
 TODO:
-Implement bluetooth with pairing capabilites to a microprocessor
-Load custom models for AI
-Search on results found and view a description
+
+	Implement bluetooth with pairing capabilites to a microprocessor
+	Load custom models for AI
+	Search on results found and view a description
 
 How to use:
 
