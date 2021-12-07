@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Camera } from 'expo-camera';
 import * as tf from '@tensorflow/tfjs';
-import { cameraWithTensors, bundleResourceIO, fetch } from '@tensorflow/tfjs-react-native';
+import { cameraWithTensors, bundleResourceIO } from '@tensorflow/tfjs-react-native';
 import * as mobilenet from '@tensorflow-models/coco-ssd';
 import { Text, View } from "react-native";
 import Canvas from 'react-native-canvas';
 import {drawRect} from "../utilities";
 import { LogBox, Dimensions } from 'react-native';
+
 
 let frame = 0;
 const computeRecognitionEveryNFrames = 60;
@@ -16,7 +17,7 @@ export default function SCamera(props) {
   const TensorCamera = cameraWithTensors(Camera);
   const [hasPermission, setHasPermission] = useState(null);
   const canvasRef = useRef(null);
-  const [net, setNet] = useState(null);
+  const [model, setModel] = useState(null);
 
   const initialiseTensorflow = async () => {
     await tf.ready();
@@ -25,22 +26,31 @@ export default function SCamera(props) {
 
   handleCameraStream = (images) => {
     const loop = async () => {
-      if (net) {
+      if (model) {
         if (frame % computeRecognitionEveryNFrames === 0) {
           const nextImageTensor = images.next().value;
           if (nextImageTensor) {
             canvasRef.current.width = width;
             canvasRef.current.height = height;
             const ctx = canvasRef.current.getContext("2d");
-            const objects = await net.detect(nextImageTensor);
-            //nextImageTensor.shape.unshift(1);
-            console.log(nextImageTensor.shape);
-            //const objects = await net.predict(nextImageTensor).data()
-            drawRect(objects, ctx,canvasRef)
-            console.log(objects);        
-            console.log(canvasRef.current.width)
-            console.log(canvasRef.current.height)
-            tf.dispose([nextImageTensor]);
+            const prediction = await model.detect(nextImageTensor);
+            //tensor = nextImageTensor.expandDims(axis=0);
+            //console.log(tensor);
+            //const prediction = await model.predict(tensor, {batchSize:1});
+           // prediction.forEach((pred, i) => {
+             // console.log('INDEX:'+i+'---------------------------------------------------------------------');
+              //const norm = pred.print();
+             // console.log(pred)
+              //console.log(pred.data());
+             // pred.print();
+             // console.log('--------------------------------------------------------------------------------')
+           // })
+            //console.log(preds);
+            drawRect(prediction, ctx,canvasRef)
+            //console.log(prediction);        
+            //console.log(canvasRef.current.width)
+            //console.log(canvasRef.current.height)
+            tf.dispose(nextImageTensor);
           }
         }
         frame += 1;
@@ -61,10 +71,10 @@ export default function SCamera(props) {
       // initialise Tensorflow
       await initialiseTensorflow();
       // load the model
-      setNet(await mobilenet.load());
+      setModel(await mobilenet.load());
       const modelJson = await require('../../assets/model.json');
       const modelWeight = await require('../../assets/weights.bin');
-     // setNet(await tf.loadLayersModel(bundleResourceIO(modelJson, modelWeight)));
+     // setModel(await tf.loadLayersModel(bundleResourceIO(modelJson, modelWeight)));
     })();
   }, []);
 
@@ -87,7 +97,7 @@ export default function SCamera(props) {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
-  if (!net) {
+  if (!model) {
     return <Text>Model not loaded</Text>
   }
   return (<View style={{width:'100%',height:'100%'}}>
@@ -102,9 +112,9 @@ export default function SCamera(props) {
         type={props.type}
         cameraTextureHeight={textureDims.height}
         cameraTextureWidth={textureDims.width}
-        resizeHeight= {826}
-        resizeWidth=  {464}
         resizeDepth={3}
+        resizeHeight= {height}
+        resizeWidth=  {width}
         onReady={this.handleCameraStream}
         autorender={true}>
       </TensorCamera>
