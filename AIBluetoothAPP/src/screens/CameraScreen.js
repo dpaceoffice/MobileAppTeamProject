@@ -1,11 +1,8 @@
-import React, { useRef, useState, useEffect } from "react";
-import * as tf from '@tensorflow/tfjs';
-import * as mobilenet from '@tensorflow-models/coco-ssd';
+import React, { useState} from "react";
 import { Camera } from 'expo-camera';
-import { fetch, decodeJpeg } from '@tensorflow/tfjs-react-native';
 import SCamera from '../components/SCamera';
-import { Image, Text, View, StyleSheet, Button, FlatList, TouchableOpacity, ScrollView, SafeAreaView } from "react-native";
-import { LogBox } from 'react-native';
+import { View,TouchableOpacity} from "react-native";
+import { Ionicons } from '@expo/vector-icons';
 
 const CameraScreen = () => {
     const [type, setType] = useState(Camera.Constants.Type.back);
@@ -19,7 +16,11 @@ const CameraScreen = () => {
                         : Camera.Constants.Type.back
                 );
             }}>
-            <Text style={{ alignSelf: 'center', marginBottom: 40 }}> Flip </Text>
+            <Ionicons name="camera-reverse" size={50} style={{
+                bottom: 50,
+                color: 'white',
+                alignSelf: 'center'
+            }} />
         </TouchableOpacity>
     </View>
 

@@ -5,8 +5,8 @@ import { cameraWithTensors, bundleResourceIO } from '@tensorflow/tfjs-react-nati
 import * as mobilenet from '@tensorflow-models/coco-ssd';
 import { Text, View } from "react-native";
 import Canvas from 'react-native-canvas';
-import {drawRect} from "../utilities";
-import { LogBox, Dimensions } from 'react-native';
+import { drawRect } from "../utilities";
+import { LogBox, Dimensions, TouchableOpacity, Image } from 'react-native';
 
 
 let frame = 0;
@@ -37,15 +37,15 @@ export default function SCamera(props) {
             //tensor = nextImageTensor.expandDims(axis=0);
             //console.log(tensor);
             //const prediction = await model.predict(tensor, {batchSize:1});
-           // prediction.forEach((pred, i) => {
-             // console.log('INDEX:'+i+'---------------------------------------------------------------------');
-              //const norm = pred.print();
-             // console.log(pred)
-              //console.log(pred.data());
-             // pred.print();
-             // console.log('--------------------------------------------------------------------------------')
-           // })
-            drawRect(prediction, ctx,canvasRef)
+            // prediction.forEach((pred, i) => {
+            // console.log('INDEX:'+i+'---------------------------------------------------------------------');
+            //const norm = pred.print();
+            // console.log(pred)
+            //console.log(pred.data());
+            // pred.print();
+            // console.log('--------------------------------------------------------------------------------')
+            // })
+            drawRect(prediction, ctx, canvasRef)
             //console.log(prediction);        
             //console.log(canvasRef.current.width)
             //console.log(canvasRef.current.height)
@@ -62,9 +62,9 @@ export default function SCamera(props) {
 
   useEffect(() => {
     LogBox.ignoreLogs(['in webgl locks the UI thread']);
-    
+
     (async () => {
-      
+
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
       // initialise Tensorflow
@@ -73,7 +73,7 @@ export default function SCamera(props) {
       setModel(await mobilenet.load());
       const modelJson = await require('../../assets/model.json');
       const modelWeight = await require('../../assets/weights.bin');
-     // setModel(await tf.loadLayersModel(bundleResourceIO(modelJson, modelWeight)));
+      // setModel(await tf.loadLayersModel(bundleResourceIO(modelJson, modelWeight)));
     })();
   }, []);
 
@@ -99,8 +99,8 @@ export default function SCamera(props) {
   if (!model) {
     return <Text>Model not loaded</Text>
   }
-  return (<View style={{width:'100%',height:'100%'}}>
-      <View style={{position:'absolute', left:0, top:0, width:'100%',height:'100%',alignItems:'center',justifyContent:'center'}}>
+  return (<View style={{ width: '100%', height: '100%' }}>
+    <View style={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
       <TensorCamera style={{
         marginLeft: "auto",
         marginRight: "auto",
@@ -112,20 +112,20 @@ export default function SCamera(props) {
         cameraTextureHeight={textureDims.height}
         cameraTextureWidth={textureDims.width}
         resizeDepth={3}
-        resizeHeight= {height-150}
-        resizeWidth=  {width}
+        resizeHeight={height}
+        resizeWidth={width}
         onReady={this.handleCameraStream}
         autorender={true}>
       </TensorCamera>
-        </View>
-        <Canvas
-        ref={canvasRef}
-        style={{
-          height:height,
-          width:width,
-          zindex: 1,
-        }}
-      />
-      </View>
+    </View>
+    <Canvas
+      ref={canvasRef}
+      style={{
+        height: height,
+        width: width,
+        zindex: 1,
+      }}
+    />
+  </View>
   );
 }

@@ -40,7 +40,7 @@ const navigator = createBottomTabNavigator ({
 				)
 			}
 		},
-		Camera: {screen: CameraStack,
+		Camera: {screen: CameraScreen,
 			navigationOptions: {
 				tabBarLabel: "Camera",
 				tabBarIcon: ({tintColor}) => (
@@ -50,7 +50,7 @@ const navigator = createBottomTabNavigator ({
 		}
 	},
 	{
-		initialRouteName:"Search",
+		initialRouteName:"Camera",
 		tabBarOptions: {
 			activeTintColor: 'blue',
 			inactiveTintColor: 'grey'
