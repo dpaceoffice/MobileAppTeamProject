@@ -96,10 +96,10 @@ export default function SCamera(props) {
     return <View />;
   }
   if (hasPermission === false) {
-    return <Text>Please allow access to the camera to view this screen.</Text>;
+    return <View style={{ flex: 1, alignItems: 'center', height: '100%', justifyContent: 'center' }}><Text>Please allow access to the camera to view this screen.</Text></View>;
   }
   if (!model) {
-    return <Text>Loading model, please wait.</Text>
+    return <View style={{ flex: 1, alignItems: 'center', height: '100%', justifyContent: 'center' }}><Text>Loading model, please wait.</Text></View>
   }
   return (<View style={{ flex: 1, alignItems: 'center', height: '100%', justifyContent: 'center' }}>
   <View style={{ width: '100%', height: '100%' }}>
