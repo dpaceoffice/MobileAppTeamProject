@@ -6,7 +6,8 @@ import * as mobilenet from '@tensorflow-models/coco-ssd';
 import { Text, View } from "react-native";
 import Canvas from 'react-native-canvas';
 import { drawRect } from "../utilities";
-import { LogBox, Dimensions, TouchableOpacity, Image } from 'react-native';
+import { LogBox, Dimensions, TouchableOpacity} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 
 let frame = 0;
@@ -18,6 +19,7 @@ export default function SCamera(props) {
   const [hasPermission, setHasPermission] = useState(null);
   const canvasRef = useRef(null);
   const [model, setModel] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
 
   const initialiseTensorflow = async () => {
     await tf.ready();
@@ -94,12 +96,13 @@ export default function SCamera(props) {
     return <View />;
   }
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    return <Text>Please allow access to the camera to view this screen.</Text>;
   }
   if (!model) {
-    return <Text>Model not loaded</Text>
+    return <Text>Loading model, please wait.</Text>
   }
-  return (<View style={{ width: '100%', height: '100%' }}>
+  return (<View style={{ flex: 1, alignItems: 'center', height: '100%', justifyContent: 'center' }}>
+  <View style={{ width: '100%', height: '100%' }}>
     <View style={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
       <TensorCamera style={{
         marginLeft: "auto",
@@ -108,7 +111,7 @@ export default function SCamera(props) {
         height: height,
         width: width,
       }}
-        type={props.type}
+        type={type}
         cameraTextureHeight={textureDims.height}
         cameraTextureWidth={textureDims.width}
         resizeDepth={3}
@@ -127,5 +130,20 @@ export default function SCamera(props) {
       }}
     />
   </View>
+      <TouchableOpacity
+      onPress={() => {
+        setType(
+          type === Camera.Constants.Type.back
+            ? Camera.Constants.Type.front
+            : Camera.Constants.Type.back
+        );
+      }}>
+      <Ionicons name="camera-reverse" size={50} style={{
+        bottom: 50,
+        color: 'white',
+        alignSelf: 'center'
+      }} />
+    </TouchableOpacity>
+    </View>
   );
 }
