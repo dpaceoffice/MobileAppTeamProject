@@ -1,3 +1,4 @@
+import React from "react";
 import SCamera from '../components/SCamera';
 
 
