@@ -6,7 +6,7 @@ const image = require('../../assets/logo.jpg');
 const WelcomeScreen = (props) => {
 
     return <View style = {styles.container}>
-    	<TouchableOpacity onPress = {()=>{props.navigation.navigate("Main")}}>
+    	<TouchableOpacity onPress = {()=>{props.navigation.navigate("Search")}}>
         <Image style={styles.image} source={image}/>
         </TouchableOpacity>
     </View>
