@@ -54,15 +54,14 @@ const stack = createStackNavigator(
         },
         Search: {
             screen: Tabs,
+			navigationOptions:{
+				headerShown: false
+			},
         }
 
     },
     {
         initialRouteName:"Welcome",
-        navigationOptions:{
-            headerShown: false
-        },
-		headerMode: 'none',
         tabBarOptions: {
             activeTintColor: 'blue',
             inactiveTintColor: 'grey'

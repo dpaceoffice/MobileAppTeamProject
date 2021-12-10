@@ -7,7 +7,7 @@ const WelcomeScreen = (props) => {
 
     return <View style = {styles.container}>
     	<TouchableOpacity onPress = {()=>{props.navigation.navigate("Search")}}>
-        <Image style={styles.image} source={image}/>
+        <Image style={{width: 1024, height: 768}} source={image}/>
         </TouchableOpacity>
     </View>
 }
