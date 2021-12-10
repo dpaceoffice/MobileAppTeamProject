@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-evenly",
         backgroundColor: "whitesmoke",
         flexDirection: "row",
-
+        marginTop: 50,
     },
    
 });

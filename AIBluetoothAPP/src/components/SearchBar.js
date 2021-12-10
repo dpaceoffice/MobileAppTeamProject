@@ -5,17 +5,18 @@ import {Entypo} from "@expo/vector-icons";
 const SearchBar = (props) => {
 	return <View style = {styles.background}>
 		
-		<Entypo size = {30} name = "magnifying-glass"/>
+		<Entypo size = {40} name = "magnifying-glass"/>
 		
 		<TextInput 
 			style = {styles.text} 
 			placeholder = "Search"
 			value = {props.searchTerm}
-			onChangeText = {(newTerm) => props.onTermChange(newTerm)}
+			//onChangeText = {(newTerm) => props.onTermChange(newTerm)}
 		/>
 
 	</View>
 }
+
 
 const styles = StyleSheet.create({
 	background:{
