@@ -1,9 +1,5 @@
-import React, {Component} from "react";
-
-import {createAppContainer} from "react-navigation";
-import { createStackNavigator} from "react-navigation-stack";
-
-import { Platform, Text, View, StyleSheet, Button, FlatList, TouchableOpacity} from "react-native";
+import React, {useState} from "react";
+import { View, StyleSheet, TouchableOpacity} from "react-native";
 import SearchBar from "../components/SearchBar";
 import { AntDesign } from '@expo/vector-icons'; 
 

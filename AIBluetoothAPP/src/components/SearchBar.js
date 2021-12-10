@@ -11,7 +11,7 @@ const SearchBar = (props) => {
 			style = {styles.text} 
 			placeholder = "Search"
 			value = {props.searchTerm}
-			onChangeText = {(newTerm) => props.onTermChange(newTerm)}
+			//onChangeText = {(newTerm) => props.onTermChange(newTerm)}
 		/>
 
 	</View>
