@@ -1,4 +1,4 @@
-import {createAppContainer} from "react-navigation";
+import {createAppContainer, createSwitchNavigator} from "react-navigation";
 import {createStackNavigator} from "react-navigation-stack";
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Ionicons } from '@expo/vector-icons';
@@ -7,24 +7,22 @@ import React from "react";
 import SearchScreen from "./src/screens/SearchScreen";
 import BluetoothScreen from "./src/screens/BluetoothScreen";
 import CameraScreen from "./src/screens/CameraScreen";
+import WelcomeScreen from "./src/screens/WelcomeScreen";
+import AboutScreen from "./src/screens/AboutScreen";
 
-const SearchStack = createStackNavigator({
-	Search: SearchScreen,
 
-});
 
-const BluetoothStack = createStackNavigator({
-	Bluetooth: BluetoothScreen,
 
-});
+const WelcomeStack = createStackNavigator(
+ {
+     Welcome: WelcomeScreen,
 
-const CameraStack = createStackNavigator({
-	Camera: CameraScreen,
+     About: AboutScreen,
 
-});
 
-const navigator = createBottomTabNavigator ({
-		Search:{screen: SearchStack,
+     Main: createBottomTabNavigator ({
+
+		Search:{screen: SearchScreen,
 			navigationOptions: {
 				tabBarLabel: "Screen",
 				tabBarIcon: ({tintColor}) => (
@@ -32,7 +30,7 @@ const navigator = createBottomTabNavigator ({
 				)
 			}
 		},
-		Bluetooth: {screen: BluetoothStack,
+		Bluetooth: {screen: BluetoothScreen,
 			navigationOptions: {
 				tabBarLabel: "Bluetooth",
 				tabBarIcon: ({tintColor}) => (
@@ -57,7 +55,14 @@ const navigator = createBottomTabNavigator ({
 			
 		}
 	}
-	
 )
+ 	
 
-export default createAppContainer(navigator);
+
+ }
+
+ )
+
+
+
+export default createAppContainer(WelcomeStack);

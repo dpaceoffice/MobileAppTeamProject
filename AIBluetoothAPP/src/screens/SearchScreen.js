@@ -1,15 +1,25 @@
-import React, {useState} from "react";
-import { Text, View, StyleSheet, FlatList, } from "react-native";
+import React, {Component} from "react";
+
+import {createAppContainer} from "react-navigation";
+import { createStackNavigator} from "react-navigation-stack";
+
+import { Platform, Text, View, StyleSheet, Button, FlatList, TouchableOpacity} from "react-native";
 import SearchBar from "../components/SearchBar";
+import { AntDesign } from '@expo/vector-icons'; 
+
 
 const SearchScreen = (props) => {
     const [searchTerm,setSearchTerm] = useState("");
 
+
     return <View style = {styles.container}>
-        <SearchBar 
-            searchTerm = {searchTerm} 
-            onTermChange = {(newTerm) => setSearchTerm(newTerm)}
-        />
+   		 <SearchBar />
+		<TouchableOpacity style={styles.about}
+		onPress={()=>{props.navigation.navigate("About")}}
+		>
+			<AntDesign name="infocirlce" size={35} color="white" />
+		</TouchableOpacity>
+
     </View>
 }
 
@@ -18,8 +28,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        justifyContent: "flex-start"
-    }
+        justifyContent: "flex-start",
+        backgroundColor: '#083050'
+    },
+
+    about: {
+  		alignSelf: "flex-start",
+  		left: 15,
+  		position: 'absolute',
+  		marginTop: 10
+    },
+
 });
 
 export default SearchScreen;
