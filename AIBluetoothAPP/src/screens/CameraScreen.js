@@ -68,9 +68,11 @@ export default function CameraScreen() {
             setHasPermission(status === 'granted');
             // initialise Tensorflow
             await initialiseTensorflow();
-            // load the model
+            // load the model 
+            /*
             const modelJson = await require('../../assets/model.json');
             const modelWeight = await require('../../assets/weights.bin');
+            */
             setModel(await mobilenet.load());
             // setModel(await tf.loadLayersModel(bundleResourceIO(modelJson, modelWeight)));
         })();
