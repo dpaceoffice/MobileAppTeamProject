@@ -8,13 +8,20 @@ import Canvas from 'react-native-canvas';
 import { drawRect } from "../utilities";
 import { LogBox, Dimensions, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import yolo from 'tfjs-yolo';
 
 
 let frame = 0;
 const computeRecognitionEveryNFrames = 60;
 
+const window = Dimensions.get("window");
+const screen = Dimensions.get("screen");
+
 export default function CameraScreen() {
-    let { width, height } = Dimensions.get('window');
+    const [dimensions, setDimensions] = useState({ window, screen });
+    let height = dimensions.window.height;
+    let width = dimensions.window.width;
+    console.log(dimensions.screen.width)
     const TensorCamera = cameraWithTensors(Camera);
     const [hasPermission, setHasPermission] = useState(null);
     const canvasRef = useRef(null);
@@ -36,9 +43,13 @@ export default function CameraScreen() {
                         canvasRef.current.height = height;
                         const ctx = canvasRef.current.getContext("2d");
                         const prediction = await model.detect(nextImageTensor);
+
                         //tensor = nextImageTensor.expandDims(axis=0);
+                        //const predications = await model.predict(tensor);
                         //console.log(tensor);
-                        //const prediction = await model.predict(tensor, {batchSize:1});
+                        //await model.predict(tensor, {batchSize: 1});
+
+                        
                         // prediction.forEach((pred, i) => {
                         // console.log('INDEX:'+i+'---------------------------------------------------------------------');
                         //const norm = pred.print();
@@ -47,7 +58,11 @@ export default function CameraScreen() {
                         // pred.print();
                         // console.log('--------------------------------------------------------------------------------')
                         // })
+                        //console.log(width);
+                        //console.log(height);
+
                         drawRect(prediction, ctx, canvasRef)
+                        //ctx.transform(1, 0, 0, 1, 100, 0);
                         tf.dispose(nextImageTensor);
                     }
                 }
@@ -60,8 +75,13 @@ export default function CameraScreen() {
     };
 
     useEffect(() => {
+        const subscription = Dimensions.addEventListener(
+            "change",
+            ({ window, screen }) => {
+              setDimensions({ window, screen });
+            }
+          );
         LogBox.ignoreLogs(['in webgl locks the UI thread']);
-
         (async () => {
 
             const { status } = await Camera.requestCameraPermissionsAsync();
@@ -76,6 +96,7 @@ export default function CameraScreen() {
             setModel(await mobilenet.load());
             // setModel(await tf.loadLayersModel(bundleResourceIO(modelJson, modelWeight)));
         })();
+        return () => subscription?.remove();
     }, []);
 
     let textureDims;
@@ -100,15 +121,15 @@ export default function CameraScreen() {
     if (!model) {
         return <View style={{ flex: 1, alignItems: 'center', height: '100%', justifyContent: 'center' }}><Text>Loading model, please wait.</Text></View>
     }
-    return (<View style={{ flex: 1, alignItems: 'center', height: '100%', justifyContent: 'center' }}>
-        <View style={{ width: '100%', height: '100%' }}>
-            <View style={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+    return (<View style={{ flex: 1, height: '100%'}}>
+        <View style={{ width: width, height: '100%' }}>
+            <View style={{ position: 'absolute',width: '100%', height: '100%'}}>
                 <TensorCamera style={{
                     marginLeft: "auto",
                     marginRight: "auto",
-                    zindex: 0,
-                    height: height,
                     width: width,
+                    height: height,
+                    zindex: 0,
                 }}
                     type={type}
                     cameraTextureHeight={textureDims.height}
